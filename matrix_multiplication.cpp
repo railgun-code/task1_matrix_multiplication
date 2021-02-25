@@ -4,9 +4,9 @@
 #include <omp.h>
 
 
-void mult(double* A, double* B, double* C, int N, int K, int M, int block_size_row, int block_size_col)
+void mult(double* A, double* B, double* C, int M, int N, int K, int block_size_row, int block_size_col)
 {
-    assert(M % block_size_row == 0 && N % block_size_col == 0);
+    assert(M % block_size_row == 0 && K % block_size_col == 0);
 
     for (int i = 0; i < M; i++)
         for (int j = 0; j < N; j++)
@@ -56,11 +56,11 @@ int main(int argc, char** argv)
     int N, M, K;
     int block_size_row, block_size_col;
 
-    N = 1000;
     M = 1500;
+    N = 1000;
     K = 2000;
-    block_size_row = 500;
-    block_size_col = 500;
+    block_size_row = 150;
+    block_size_col = 200;
 
     double* A, * B, * C;
 
@@ -71,7 +71,7 @@ int main(int argc, char** argv)
     gen_matrix(A, M, K);
     gen_matrix(B, K, N);
 
-    mult(A, B, C, N, K, M, block_size_row, block_size_col);
+    mult(A, B, C, M, N, K, block_size_row, block_size_col);
 
     free_matrix(&A);
     free_matrix(&B);
