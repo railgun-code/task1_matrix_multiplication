@@ -23,7 +23,7 @@ void mult(double* A, double* B, double* C, int N, int K, int M, int block_size_r
                         C[i * N + j] += A[i * K + k] * B[k * N + j];
 }
 
-int testThreadCount() {
+int get_thread_count() {
     int thread_count;
 #pragma omp parallel 
     {
@@ -33,7 +33,7 @@ int testThreadCount() {
     return thread_count;
 }
 
-void allocMatrix(double** mat, int n, int k)
+void alloc_matrix(double** mat, int n, int k)
 {
     (*mat) = (double*)_mm_malloc(sizeof(double) * (n * k), 64);
 }
@@ -64,9 +64,9 @@ int main(int argc, char** argv)
 
     double* A, * B, * C;
 
-    allocMatrix(&A, M, K);
-    allocMatrix(&B, K, N);
-    allocMatrix(&C, M, N);
+    alloc_matrix(&A, M, K);
+    alloc_matrix(&B, K, N);
+    alloc_matrix(&C, M, N);
 
     gen_matrix(A, M, K);
     gen_matrix(B, K, N);
